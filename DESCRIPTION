@@ -21,6 +21,7 @@ Imports:
     dplyr,
     ggplot2,
     network.tools,
+    posterior,
     tidybayes
 Suggests:
     rlang,

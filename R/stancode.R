@@ -164,6 +164,18 @@ stancode <- function(plant_effort = c("param", "data"),
     "        Q[i, j] = exp(nu_ij_1) / (exp(nu_ij_0) + exp(nu_ij_1));\n",
     "    }\n",
     "  }\n",
+    "  // Pointwise log likelihood to support model comparison tools (LOO-CV, WAIC)\n",
+    "  array[n_p, n_a] real log_lik;\n",
+    "  for (i in 1:n_p) {\n",
+    "    for (j in 1:n_a) {\n",
+    paste0("      real nu_ij = log(rho) + log(",
+           switch(plant_effort,
+                  param = "C",
+                  data = "C[i]"),
+           ") + log(sigma[i]) + log(tau[j]);\n"),
+    "      log_lik[i, j] = M[i, j] * nu_ij - exp(nu_ij);\n",
+    "    };\n",
+    "  };\n",
     "}"
   )
 
