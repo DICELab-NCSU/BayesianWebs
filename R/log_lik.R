@@ -4,7 +4,7 @@
 #' @param ... Additional arguments passed to [cmdstanr::as_draws()].
 #'
 #' @return An object of class `draws_matrix`. See [posterior::draws_matrix()] for details.
-#' @importFrom posterior as_draws
+#' @import cmdstanr
 #' @export
 #'
 #' @examplesIf interactive()
@@ -15,5 +15,6 @@
 #'
 #'
 log_lik <- function(fit, ...) {
+  if (!"CmdStanFit" %in% class(fit)) stop("'fit' must be a CmdStanFit fitted model object.")
   fit$draws(variables = "log_lik", format = "matrix", ...)
 }
